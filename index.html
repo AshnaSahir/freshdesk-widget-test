@@ -111,7 +111,7 @@
             const email = document.getElementById('email').value;
             const apiKey = 'afbB1cE4fHZaku6xnOB';  // Add your Freshdesk API key here
 
-            fetch(`https://your_freshdesk_domain.freshdesk.com/api/v2/tickets?email=${email}`, {
+            fetch(`https://lumi-help.freshdesk.com/api/v2/tickets?email=${email}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Basic ' + btoa(apiKey + ':X'),
