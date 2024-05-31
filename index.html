@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freshdesk Widget Test</title>
+    <title>Freshdesk Widget and Ticket Status</title>
     <style>
         /* Custom styles for the upload message */
         .custom-upload-message {
@@ -11,14 +11,28 @@
             color: #333;
             margin-bottom: 10px;
         }
+        #ticket-status {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to the Freshdesk Widget Test Page</h1>
+    <h1>Welcome to the Freshdesk Widget and Ticket Status Page</h1>
     <p>Click the button below to open the support widget.</p>
 
     <!-- Freshdesk Support Widget Button -->
     <button id="freshdesk-widget-button" onclick="openFreshdeskWidget()">Support</button>
+
+    <!-- Form to Get Ticket Status -->
+    <div id="ticket-status">
+        <h2>Check Ticket Status</h2>
+        <form id="status-form">
+            <label for="email">Enter your email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit">Get Ticket Status</button>
+        </form>
+        <div id="ticket-results"></div>
+    </div>
 
     <!-- Freshdesk Support Widget Code -->
     <script>
@@ -88,6 +102,47 @@
         script.src = "https://widget.freshworks.com/widgets/154000002304.js";
         script.onload = initFreshworksWidget;
         document.head.appendChild(script);
+    </script>
+
+    <!-- Fetch Ticket Status -->
+    <script>
+        document.getElementById('status-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const apiKey = 'afbB1cE4fHZaku6xnOB';  // Add your Freshdesk API key here
+
+            fetch(`https://your_freshdesk_domain.freshdesk.com/api/v2/tickets?email=${email}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Basic ' + btoa(apiKey + ':X'),
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultsDiv = document.getElementById('ticket-results');
+                resultsDiv.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(ticket => {
+                        const ticketElement = document.createElement('div');
+                        ticketElement.innerHTML = `
+                            <h3>Ticket ID: ${ticket.id}</h3>
+                            <p>Status: ${ticket.status}</p>
+                            <p>Subject: ${ticket.subject}</p>
+                            <p>Description: ${ticket.description}</p>
+                        `;
+                        resultsDiv.appendChild(ticketElement);
+                    });
+                } else {
+                    resultsDiv.innerHTML = '<p>No tickets found for this email.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching tickets:', error);
+                document.getElementById('ticket-results').innerHTML = '<p>Error fetching ticket status.</p>';
+            });
+        });
     </script>
 </body>
 </html>
