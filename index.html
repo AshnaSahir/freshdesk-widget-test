@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshdesk Widget Test</title>
+    <style>
+        /* Custom styles for the upload message */
+        .custom-upload-message {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Freshdesk Widget Test Page</h1>
+    <p>Click the button below to open the support widget.</p>
+
+    <!-- Freshdesk Support Widget Button -->
+    <button id="freshdesk-widget-button" onclick="openFreshdeskWidget()">Support</button>
+
+    <!-- Freshdesk Support Widget Code -->
+    <script>
+        window.fwSettings = {
+            'widget_id': 154000002304,
+            'locale': 'en',
+            'default_form': {
+                'ticketForm': {
+                    'fields': {
+                        'driver_name': {
+                            'label': 'Driver Name',
+                            'required': true,
+                        },
+                        'driver_contact_number': {
+                            'label': 'Driver Contact Number',
+                            'required': true,
+                        },
+                        'driver_email': {
+                            'label': 'Driver Email',
+                            'required': true,
+                        },
+                        'driver_license_id': {
+                            'label': 'Driver License ID',
+                            'required': true,
+                        },
+                        'custom_upload': {
+                            'type': 'file',
+                            'label': 'Upload Image',
+                            'required': false,
+                            'custom_html': '<div class="custom-upload-message">Please upload images of the driver\'s license here:</div>'
+                        }
+                    },
+                    'submit_label': 'Submit',
+                    'success_message': 'Thank you! Your ticket has been submitted.',
+                    'error_message': 'Oops! Something went wrong. Please try again.',
+                },
+            },
+        };
+
+        function openFreshdeskWidget() {
+            FreshworksWidget('open');
+        }
+
+        !function() {
+            if ("function" != typeof window.FreshworksWidget) {
+                var n = function() {
+                    n.q.push(arguments)
+                };
+                n.q = [], window.FreshworksWidget = n
+            }
+        }();
+
+        function initFreshworksWidget() {
+            FreshworksWidget('boot', {
+                'widget_id': 154000002304,
+                'appearance': {
+                    'color': '#4CAF50',
+                    'position': 'right',
+                    'icon': 'https://example.com/icon.png',
+                    'label': 'Support'
+                },
+            });
+        }
+
+        var script = document.createElement("script");
+        script.async = true;
+        script.src = "https://widget.freshworks.com/widgets/154000002304.js";
+        script.onload = initFreshworksWidget;
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
