@@ -86,10 +86,13 @@
 
             if (userName && userEmail) {
                 FreshworksWidget('identify', 'ticketForm', {
-                    'requester_name': userName,
-                    'requester_email': userEmail
+                    'name': userName,
+                    'email': userEmail
                 });
-                FreshworksWidget('open');
+                FreshworksWidget('open', {
+                    'name': userName,
+                    'email': userEmail
+                });
             } else {
                 alert("Name and Email are required to open the support widget.");
             }
