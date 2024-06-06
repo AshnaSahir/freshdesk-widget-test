@@ -14,6 +14,11 @@
         #ticket-status {
             margin-top: 20px;
         }
+        #confirmation-message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: green;
+        }
     </style>
 </head>
 <body>
@@ -33,6 +38,9 @@
         </form>
         <div id="ticket-results"></div>
     </div>
+
+    <!-- Confirmation Message -->
+    <div id="confirmation-message"></div>
 
     <!-- Freshdesk Support Widget Code -->
     <script>
@@ -116,6 +124,198 @@
                     'icon': 'https://example.com/icon.png',
                     'label': 'Support'
                 },
+            });
+
+            FreshworksWidget('ready', function() {
+                FreshworksWidget('on', 'ticketFormSubmit', function(eventData) {
+                    const ticketId = eventData.ticketId;
+                    document.getElementById('confirmation-message').innerHTML = `Hi, thank you for submitting the ticket, here is your ticket ID: ${ticketId}`;
+                });
+            });
+        }
+
+        var script = document.createElement("script");
+        script.async = true;
+        script.src = "https://widget.freshworks.com/widgets/154000002356.js";
+        script.onload = initFreshworksWidget;
+        document.head.appendChild(script);
+    </script>
+
+    <!-- Fetch Ticket Status -->
+    <script>
+        document.getElementById('status-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const apiKey = 'y0s8rdK9q3ICfw54NoY4';  // Add your Freshdesk API key here
+
+            fetch(`https://test7605.freshdesk.com/api/v2/tickets?email=${email}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Basic ' + btoa(apiKey + ':X'),
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultsDiv = document.getElementById('ticket-results');
+                resultsDiv.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(ticket => {
+                        const ticketElement = document.createElement('div');
+                        ticketElement.innerHTML = `
+                            <h3>Ticket ID: ${ticket.id}</h3>
+                            <p>Status: ${ticket.status}</p>
+                            <p>Subject: ${ticket.subject}</p>
+                            <p>Description: ${ticket.description}</p>
+                        `;
+                        resultsDiv.appendChild(ticketElement);
+                    });
+                } else {
+                    resultsDiv.innerHTML = '<p>No tickets found for this email.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching tickets:', error);
+                document.getElementById('ticket-results').innerHTML = '<p>Error fetching ticket status.</p>';
+            });
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshdesk Widget and Ticket Status</title>
+    <style>
+        /* Custom styles for the upload message */
+        .custom-upload-message {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        #ticket-status {
+            margin-top: 20px;
+        }
+        #confirmation-message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Freshdesk Widget and Ticket Status Page</h1>
+    <p>Click the button below to open the support widget.</p>
+
+    <!-- Freshdesk Support Widget Button -->
+    <button id="freshdesk-widget-button" onclick="openFreshdeskWidget()">Support</button>
+
+    <!-- Form to Get Ticket Status -->
+    <div id="ticket-status">
+        <h2>Check Ticket Status</h2>
+        <form id="status-form">
+            <label for="email">Enter your email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit">Get Ticket Status</button>
+        </form>
+        <div id="ticket-results"></div>
+    </div>
+
+    <!-- Confirmation Message -->
+    <div id="confirmation-message"></div>
+
+    <!-- Freshdesk Support Widget Code -->
+    <script>
+        window.fwSettings = {
+            'widget_id': 154000002356,
+            'locale': 'en',
+            'default_form': {
+                'ticketForm': {
+                    'fields': {
+                        'requester_name': {
+                            'label': 'Your Name',
+                            'required': true,
+                        },
+                        'requester_email': {
+                            'label': 'Your Email',
+                            'required': true,
+                        },
+                        'driver_name': {
+                            'label': 'Driver Name',
+                            'required': true,
+                        },
+                        'driver_contact_number': {
+                            'label': 'Driver Contact Number',
+                            'required': true,
+                        },
+                        'driver_email': {
+                            'label': 'Driver Email',
+                            'required': true,
+                        },
+                        'driver_license_id': {
+                            'label': 'Driver License ID',
+                            'required': true,
+                        },
+                        'custom_upload': {
+                            'type': 'file',
+                            'label': 'Upload Image',
+                            'required': false,
+                            'custom_html': '<div class="custom-upload-message">Please upload images of the driver\'s license here:</div>'
+                        }
+                    },
+                    'submit_label': 'Submit',
+                    'success_message': 'Thank you! Your ticket has been submitted.',
+                    'error_message': 'Oops! Something went wrong. Please try again.',
+                },
+            },
+        };
+
+        function openFreshdeskWidget() {
+            const userName = prompt("Please enter your name:", "");
+            const userEmail = prompt("Please enter your email:", "");
+
+            if (userName && userEmail) {
+                FreshworksWidget('identify', 'ticketForm', {
+                    'name': userName,
+                    'email': userEmail
+                });
+                FreshworksWidget('open', 'ticketForm', {
+                    'name': userName,
+                    'email': userEmail
+                });
+            } else {
+                alert("Name and Email are required to open the support widget.");
+            }
+        }
+
+        !function() {
+            if ("function" != typeof window.FreshworksWidget) {
+                var n = function() {
+                    n.q.push(arguments)
+                };
+                n.q = [], window.FreshworksWidget = n
+            }
+        }();
+
+        function initFreshworksWidget() {
+            FreshworksWidget('boot', {
+                'widget_id': 154000002356,
+                'appearance': {
+                    'color': '#4CAF50',
+                    'position': 'right',
+                    'icon': 'https://example.com/icon.png',
+                    'label': 'Support'
+                },
+            });
+
+            FreshworksWidget('ready', function() {
+                FreshworksWidget('on', 'ticketFormSubmit', function(eventData) {
+                    const ticketId = eventData.ticketId;
+                    document.getElementById('confirmation-message').innerHTML = `Hi, thank you for submitting the ticket, here is your ticket ID: ${ticketId}`;
+                });
             });
         }
 
