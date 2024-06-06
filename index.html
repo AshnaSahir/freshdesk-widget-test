@@ -44,49 +44,51 @@
 
     <!-- Freshdesk Support Widget Code -->
     <script>
-        window.fwSettings = {
-            'widget_id': 154000002356,
-            'locale': 'en',
-            'default_form': {
-                'ticketForm': {
-                    'fields': {
-                        'requester_name': {
-                            'label': 'Your Name',
-                            'required': true,
+        if (!window.fwSettings) {
+            window.fwSettings = {
+                'widget_id': 154000002356,
+                'locale': 'en',
+                'default_form': {
+                    'ticketForm': {
+                        'fields': {
+                            'requester_name': {
+                                'label': 'Your Name',
+                                'required': true,
+                            },
+                            'requester_email': {
+                                'label': 'Your Email',
+                                'required': true,
+                            },
+                            'driver_name': {
+                                'label': 'Driver Name',
+                                'required': true,
+                            },
+                            'driver_contact_number': {
+                                'label': 'Driver Contact Number',
+                                'required': true,
+                            },
+                            'driver_email': {
+                                'label': 'Driver Email',
+                                'required': true,
+                            },
+                            'driver_license_id': {
+                                'label': 'Driver License ID',
+                                'required': true,
+                            },
+                            'custom_upload': {
+                                'type': 'file',
+                                'label': 'Upload Image',
+                                'required': false,
+                                'custom_html': '<div class="custom-upload-message">Please upload images of the driver\'s license here:</div>'
+                            }
                         },
-                        'requester_email': {
-                            'label': 'Your Email',
-                            'required': true,
-                        },
-                        'driver_name': {
-                            'label': 'Driver Name',
-                            'required': true,
-                        },
-                        'driver_contact_number': {
-                            'label': 'Driver Contact Number',
-                            'required': true,
-                        },
-                        'driver_email': {
-                            'label': 'Driver Email',
-                            'required': true,
-                        },
-                        'driver_license_id': {
-                            'label': 'Driver License ID',
-                            'required': true,
-                        },
-                        'custom_upload': {
-                            'type': 'file',
-                            'label': 'Upload Image',
-                            'required': false,
-                            'custom_html': '<div class="custom-upload-message">Please upload images of the driver\'s license here:</div>'
-                        }
+                        'submit_label': 'Submit',
+                        'success_message': 'Thank you! Your ticket has been submitted.',
+                        'error_message': 'Oops! Something went wrong. Please try again.',
                     },
-                    'submit_label': 'Submit',
-                    'success_message': 'Thank you! Your ticket has been submitted.',
-                    'error_message': 'Oops! Something went wrong. Please try again.',
                 },
-            },
-        };
+            };
+        }
 
         function openFreshdeskWidget() {
             const userName = prompt("Please enter your name:", "");
@@ -112,25 +114,31 @@
             }
         }();
 
-        function initFreshworksWidget() {
-            FreshworksWidget('boot', {
-                'widget_id': 154000002356,
-                'appearance': {
-                    'color': '#4CAF50',
-                    'position': 'right',
-                    'icon': 'https://example.com/icon.png',
-                    'label': 'Support'
-                },
-            });
+        var isWidgetInitialized = false;
 
-            FreshworksWidget('ready', function() {
-                console.log('Freshdesk widget is ready');
-                FreshworksWidget('on', 'ticketFormSubmit', function(eventData) {
-                    console.log('Ticket form submitted:', eventData);
-                    const ticketId = eventData.ticketId;
-                    document.getElementById('confirmation-message').innerHTML = `Hi, thank you for submitting the ticket, here is your ticket ID: ${ticketId}`;
+        function initFreshworksWidget() {
+            if (!isWidgetInitialized) {
+                FreshworksWidget('boot', {
+                    'widget_id': 154000002356,
+                    'appearance': {
+                        'color': '#4CAF50',
+                        'position': 'right',
+                        'icon': 'https://example.com/icon.png',
+                        'label': 'Support'
+                    },
                 });
-            });
+
+                FreshworksWidget('ready', function() {
+                    console.log('Freshdesk widget is ready');
+                    FreshworksWidget('on', 'ticketFormSubmit', function(eventData) {
+                        console.log('Ticket form submitted:', eventData);
+                        const ticketId = eventData.ticketId;
+                        document.getElementById('confirmation-message').innerHTML = `Hi, thank you for submitting the ticket, here is your ticket ID: ${ticketId}`;
+                    });
+                });
+
+                isWidgetInitialized = true;
+            }
         }
 
         var script = document.createElement("script");
