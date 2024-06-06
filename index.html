@@ -109,9 +109,9 @@
         document.getElementById('status-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const email = document.getElementById('email').value;
-            const apiKey = '6sK6ct4KT6fuLTGG9e8';  // Add your Freshdesk API key here
+            const apiKey = 'y0s8rdK9q3ICfw54NoY4';  // Add your Freshdesk API key here
 
-            fetch(`https://lumi-help.freshdesk.com/api/v2/tickets?email=${email}`, {
+            fetch(`https://test7605.freshdesk.com/api/v2/tickets?email=${email}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Basic ' + btoa(apiKey + ':X'),
