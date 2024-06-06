@@ -42,7 +42,11 @@
             'default_form': {
                 'ticketForm': {
                     'fields': {
-                        'requester_email': {  // Ensure email field is correctly configured
+                        'requester_name': {
+                            'label': 'Your Name',
+                            'required': true,
+                        },
+                        'requester_email': {
                             'label': 'Your Email',
                             'required': true,
                         },
@@ -77,7 +81,18 @@
         };
 
         function openFreshdeskWidget() {
-            FreshworksWidget('open');
+            const userName = prompt("Please enter your name:", "");
+            const userEmail = prompt("Please enter your email:", "");
+
+            if (userName && userEmail) {
+                FreshworksWidget('identify', 'ticketForm', {
+                    'requester_name': userName,
+                    'requester_email': userEmail
+                });
+                FreshworksWidget('open');
+            } else {
+                alert("Name and Email are required to open the support widget.");
+            }
         }
 
         !function() {
