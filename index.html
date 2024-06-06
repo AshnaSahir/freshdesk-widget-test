@@ -124,7 +124,9 @@
             });
 
             FreshworksWidget('ready', function() {
+                console.log('Freshdesk widget is ready');
                 FreshworksWidget('on', 'ticketFormSubmit', function(eventData) {
+                    console.log('Ticket form submitted:', eventData);
                     const ticketId = eventData.ticketId;
                     document.getElementById('confirmation-message').innerHTML = `Hi, thank you for submitting the ticket, here is your ticket ID: ${ticketId}`;
                 });
