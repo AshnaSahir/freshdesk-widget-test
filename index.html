@@ -44,64 +44,64 @@
 
     <!-- Freshdesk Support Widget Code -->
     <script>
-        if (!window.fwSettings) {
-            window.fwSettings = {
-                'widget_id': 154000002356,
-                'locale': 'en',
-                'default_form': {
-                    'ticketForm': {
-                        'fields': {
-                            'requester_name': {
-                                'label': 'Your Name',
-                                'required': true,
-                            },
-                            'requester_email': {
-                                'label': 'Your Email',
-                                'required': true,
-                            },
-                            'driver_name': {
-                                'label': 'Driver Name',
-                                'required': true,
-                            },
-                            'driver_contact_number': {
-                                'label': 'Driver Contact Number',
-                                'required': true,
-                            },
-                            'driver_email': {
-                                'label': 'Driver Email',
-                                'required': true,
-                            },
-                            'driver_license_id': {
-                                'label': 'Driver License ID',
-                                'required': true,
-                            },
-                            'custom_upload': {
-                                'type': 'file',
-                                'label': 'Upload Image',
-                                'required': false,
-                                'custom_html': '<div class="custom-upload-message">Please upload images of the driver\'s license here:</div>'
-                            }
+        window.fwSettings = {
+            'widget_id': 154000002371,
+            'locale': 'en',
+            'default_form': {
+                'ticketForm': {
+                    'fields': {
+                        'requester_name': {
+                            'label': 'Your Name',
+                            'required': true,
                         },
-                        'submit_label': 'Submit',
-                        'success_message': 'Thank you! Your ticket has been submitted.',
-                        'error_message': 'Oops! Something went wrong. Please try again.',
+                        'requester_email': {
+                            'label': 'Your Email',
+                            'required': true,
+                        },
+                        'driver_name': {
+                            'label': 'Driver Name',
+                            'required': true,
+                        },
+                        'driver_contact_number': {
+                            'label': 'Driver Contact Number',
+                            'required': true,
+                        },
+                        'driver_email': {
+                            'label': 'Driver Email',
+                            'required': true,
+                        },
+                        'driver_license_id': {
+                            'label': 'Driver License ID',
+                            'required': true,
+                        },
+                        'custom_upload': {
+                            'type': 'file',
+                            'label': 'Upload Image',
+                            'required': false,
+                            'custom_html': '<div class="custom-upload-message">Please upload images of the driver\'s license here:</div>'
+                        }
                     },
+                    'submit_label': 'Submit',
+                    'success_message': 'Thank you! Your ticket has been submitted.',
+                    'error_message': 'Oops! Something went wrong. Please try again.',
                 },
-            };
-        }
+            },
+        };
 
         function openFreshdeskWidget() {
             const userName = prompt("Please enter your name:", "");
             const userEmail = prompt("Please enter your email:", "");
+            const companyName = prompt("Please enter your company name:", "");
 
-            if (userName && userEmail) {
+            if (userName && userEmail && companyName) {
                 FreshworksWidget('identify', {
                     'name': userName,
-                    'email': userEmail
+                    'email': userEmail,
+                    'company_name': companyName
                 });
                 FreshworksWidget('open', 'ticketForm');
             } else {
-                alert("Name and Email are required to open the support widget.");
+                alert("Name, Email, and Company Name are required to open the support widget.");
             }
         }
 
@@ -119,7 +119,7 @@
         function initFreshworksWidget() {
             if (!isWidgetInitialized) {
                 FreshworksWidget('boot', {
-                    'widget_id': 154000002356,
+                    'widget_id': 154000002371,
                     'appearance': {
                         'color': '#4CAF50',
                         'position': 'right',
@@ -143,7 +143,7 @@
 
         var script = document.createElement("script");
         script.async = true;
-        script.src = "https://widget.freshworks.com/widgets/154000002356.js";
+        script.src = "https://widget.freshworks.com/widgets/154000002371.js";
         script.onload = initFreshworksWidget;
         document.head.appendChild(script);
     </script>
@@ -155,7 +155,7 @@
             const email = document.getElementById('email').value;
             const apiKey = 'y0s8rdK9q3ICfw54NoY4';  // Add your Freshdesk API key here
 
-            fetch(`https://test7605.freshdesk.com/api/v2/tickets?email=${email}`, {
+            fetch(`https://test7605freshdesk-help.freshdesk.com/api/v2/tickets?email=${email}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Basic ' + btoa(apiKey + ':X'),
