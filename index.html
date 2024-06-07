@@ -96,15 +96,14 @@
             if (userName && userEmail && companyName) {
                 FreshworksWidget('identify', {
                     name: userName,
-                    email: userEmail,
-                    company: companyName
+                    email: userEmail
                 });
 
                 FreshworksWidget('prefill', 'ticketForm', {
                     name: userName,
                     email: userEmail,
                     custom_fields: {
-                        cf_company_name: companyName
+                        cf_company863232: companyName
                     }
                 });
 
