@@ -95,10 +95,19 @@
 
             if (userName && userEmail && companyName) {
                 FreshworksWidget('identify', {
-                    'name': userName,
-                    'email': userEmail,
-                    'company_name': companyName
+                    name: userName,
+                    email: userEmail,
+                    company: companyName
                 });
+
+                FreshworksWidget('prefill', 'ticketForm', {
+                    name: userName,
+                    email: userEmail,
+                    custom_fields: {
+                        cf_company_name: companyName
+                    }
+                });
+
                 FreshworksWidget('open', 'ticketForm');
             } else {
                 alert("Name, Email, and Company Name are required to open the support widget.");
@@ -155,7 +164,7 @@
             const email = document.getElementById('email').value;
             const apiKey = 'y0s8rdK9q3ICfw54NoY4';  // Add your Freshdesk API key here
 
-            fetch(`https://test7605freshdesk-help.freshdesk.com/api/v2/tickets?email=${email}`, {
+            fetch(`https://test7605.freshdesk.com/api/v2/tickets?email=${email}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Basic ' + btoa(apiKey + ':X'),
