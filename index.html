@@ -26,7 +26,7 @@
     <p>Click the button below to open the support widget.</p>
 
     <!-- Raise your requests here -->
-    <button id="freshdesk-widget-button" onclick="openFreshdeskWidget()">Support</button>
+    <!-- button id="freshdesk-widget-button" onclick="openFreshdeskWidget()">Support</button -->
 
     <!-- Form to Get Ticket Status -->
     <div id="ticket-status">
@@ -95,8 +95,8 @@
 
             if (userName && userEmail && companyName) {
                 FreshworksWidget('identify', {
-                    name: userName,
-                    email: userEmail
+                    name: "ashna",
+                    email: "email"
                 });
 
                 FreshworksWidget('prefill', 'ticketForm', {
