@@ -1,25 +1,35 @@
-<script type="text/javascript">
-  window.fwSettings = {
-    'widget_id': 154000002371,
-    'welcome_message': 'Welcome to Lumi Support'
-  };
-  !(function () {
-    if ('function' != typeof window.FreshworksWidget) {
-      var n = function () {
-        n.q.push(arguments);
-      };
-      (n.q = []), (window.FreshworksWidget = n);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumi Support for Lease</title>
+  <script type="text/javascript">
+    window.fwSettings = {
+      'widget_id': 154000002371,
+      'welcome_message': 'Welcome to Lumi Support'
+    };
+    !(function () {
+      if ('function' != typeof window.FreshworksWidget) {
+        var n = function () {
+          n.q.push(arguments);
+        };
+        (n.q = []), (window.FreshworksWidget = n);
+      }
+    })();
+  </script>
+  <script type="text/javascript" src="https://widget.freshworks.com/widgets/154000002371.js" async defer></script>
+  <style>
+    /* Custom CSS to move Freshdesk widget button to the top left */
+    .fw-widget-container {
+      bottom: auto !important;
+      top: 10px !important; /* Adjust as needed */
+      left: 10px !important; /* Adjust as needed */
+      right: auto !important;
     }
-  })();
-</script>
-<script type="text/javascript" src="https://widget.freshworks.com/widgets/154000002371.js" async defer></script>
-
-<style>
-  /* Custom CSS to move Freshdesk widget button to the top left */
-  .fw-widget-container {
-    bottom: auto !important;
-    top: 10px !important; /* Adjust as needed */
-    left: 10px !important; /* Adjust as needed */
-    right: auto !important;
-  }
-</style>
+  </style>
+</head>
+<body>
+  <!-- Page content goes here -->
+</body>
+</html>
