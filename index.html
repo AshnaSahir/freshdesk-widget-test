@@ -17,19 +17,6 @@
         (n.q = []), (window.FreshworksWidget = n);
       }
     })();
-
-    // After the widget script is loaded, pre-fill the user's name and email
-    function initializeWidget() {
-      FreshworksWidget('prefill', 'ticketForm', {
-        'name': 'Ashna Sahir',
-        'email': 'ashnasahir2@gmail.com'
-      });
-    }
-
-    // Wait for the Freshworks Widget to be ready before calling the pre-fill function
-    FreshworksWidget('on', 'widget:loaded', function() {
-      initializeWidget();
-    });
   </script>
   <script type="text/javascript" src="https://euc-widget.freshworks.com/widgets/103000008080.js" async defer></script>
   <style>
